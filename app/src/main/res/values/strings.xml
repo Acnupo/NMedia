@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">NMedia</string>
-    <string name="hello_text">NMedia!</string>
+    <string name="hello">Hello World!</string>
+    <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_menu">Post menu</string>
+    <string name="description_like">Like</string>
+    <string name="description_comment">Comment</string>
+    <string name="description_share">Share</string>
+    <string name="description_views">Views</string>
 </resources>

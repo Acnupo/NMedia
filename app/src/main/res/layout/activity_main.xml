@@ -1,115 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#FFFFFF">
+    android:padding="@dimen/common_spacing"
+    tools:context=".MainActivity">
 
-    <!-- Верхняя строка с аватаркой и текстами -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+    <!-- Верхняя часть поста (автор, аватар, дата) -->
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/posts_avatar_size"
+        android:layout_height="@dimen/posts_avatar_size"
+        android:layout_marginBottom="@dimen/common_spacing"
+        android:contentDescription="@string/description_post_author_avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@sample/posts.json/data/authorAvatar" />
 
-        <!-- Аватарка (круглая) -->
-        <ImageView
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/netology_logo"
-            android:contentDescription="@string/netology_logo_desc"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/circle_background"/>
-
-        <!-- Текстовый блок справа от аватарки -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Нетология. Университет интернет-проф..."
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="21 мая в 18:36"
-                android:textSize="14sp"
-                android:textColor="#808080"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- Основной текст поста -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/author"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Привет, это новая Нетология! Когда-то Нетология начиналась с интенсивов по онлайн-маркетингу. Затем появились курсы по дизайну, разработке, аналитике и управлению. Мы растём сами и помогаем расти студентам: от новичков до уверенных профессионалов. Но самое важное остаётся с нами: мы верим, что в каждом уже есть сила, которая заставляет хотеть больше, целиться выше, бежать быстрее. Наша миссия – помочь встать на путь роста и начать цепочку перемен..."
-        android:textSize="16sp"
-        android:textColor="#000000"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginStart="@dimen/common_spacing"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        app:layout_constraintBottom_toTopOf="@+id/published"
+        app:layout_constraintEnd_toStartOf="@id/menu"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@sample/posts.json/data/author" />
 
-    <!-- Ссылка -->
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/published"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="http://netolo.gy/lyb"
-        android:textSize="16sp"
-        android:textColor="#0000FF"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginStart="@dimen/common_spacing"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintBottom_toBottomOf="@id/avatar"
+        app:layout_constraintEnd_toStartOf="@id/menu"
+        app:layout_constraintStart_toEndOf="@id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/author"
+        tools:text="@sample/posts.json/data/published" />
 
-    <!-- Строка с иконками действий -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:contentDescription="@string/description_post_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatar"
+        app:srcCompat="@drawable/ic_more_vert_24" />
 
-        <!-- Здесь должны быть иконки с количеством -->
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_like"
-            android:contentDescription="@string/likes"
-            android:layout_marginEnd="4dp"/>
+    <!-- Барьер для верхней части -->
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="avatar,published,menu" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="10"
-            android:textSize="14sp"
-            android:layout_marginEnd="16dp"/>
+    <!-- Контент поста -->
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common_spacing"
+        android:autoLink="web"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_top"
+        tools:text="@sample/posts.json/data/content" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_comment"
-            android:contentDescription="@string/comments"
-            android:layout_marginEnd="4dp"/>
+    <!-- Нижняя панель с действиями -->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:textSize="14sp"
-            android:layout_marginEnd="16dp"/>
+    <!-- Лайк -->
+    <ImageButton
+        android:id="@+id/like_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:layout_marginTop="@dimen/actions_padding"
+        android:layout_marginBottom="@dimen/actions_padding"
+        android:contentDescription="@string/description_like"
+        app:srcCompat="@drawable/ic_like_outline_24"
+        app:layout_constraintTop_toBottomOf="@id/content"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_share"
-            android:contentDescription="@string/shares"
-            android:layout_marginEnd="4dp"/>
+    <TextView
+        android:id="@+id/likes_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintStart_toEndOf="@id/like_button"
+        app:layout_constraintTop_toTopOf="@id/like_button"
+        app:layout_constraintBottom_toBottomOf="@id/like_button"
+        tools:text="256" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:textSize="14sp"/>
-    </LinearLayout>
-</LinearLayout>
+    <!-- Репост (Share) -->
+    <ImageButton
+        android:id="@+id/share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"  android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="8dp"
+        android:contentDescription="@string/description_share"
+        app:srcCompat="@drawable/ic_share_outline_24"
+        app:layout_constraintTop_toTopOf="@id/like_button"
+        app:layout_constraintBottom_toBottomOf="@id/like_button"
+        app:layout_constraintStart_toEndOf="@+id/likes_count" />
+
+    <TextView
+        android:id="@+id/shares_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintStart_toEndOf="@id/share_button"
+        app:layout_constraintTop_toTopOf="@id/share_button"
+        app:layout_constraintBottom_toBottomOf="@id/share_button"
+        tools:text="12" />
+
+    <!-- Просмотры (прибиты к правому краю) -->
+    <TextView
+        android:id="@+id/views_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:textAppearance="?attr/textAppearanceCaption"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/like_button"
+        app:layout_constraintBottom_toBottomOf="@id/like_button"
+        tools:text="1.2K" />
+
+    <ImageView
+        android:id="@+id/views_icon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="4dp"
+        android:contentDescription="@string/description_views"
+        app:srcCompat="@drawable/ic_eye_outline_24"
+        app:layout_constraintTop_toTopOf="@id/like_button"
+        app:layout_constraintBottom_toBottomOf="@id/like_button"
+        app:layout_constraintEnd_toStartOf="@+id/views_count" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
