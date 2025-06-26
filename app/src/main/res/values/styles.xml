@@ -1,0 +1,22 @@
+<resources>
+    <!-- Базовый стиль для кнопок действий -->
+    <style name="Widget.App.ActionButton" parent="Widget.App.ActionButton">
+        <item name="android:layout_width">@dimen/action_icon_size</item>
+        <item name="android:layout_height">@dimen/action_icon_size</item>
+        <item name="android:layout_marginEnd">@dimen/action_icon_margin</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:tint">?attr/colorOnSurfaceVariant</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <!-- Стиль для активного состояния (например, лайк) -->
+    <style name="Widget.App.ActionButton.Active" parent="Widget.App.ActionButton">
+        <item name="android:tint">?attr/colorError</item> <!-- Красный цвет -->
+    </style>
+
+    <!-- Стиль для текста счетчиков -->
+    <style name="Widget.App.ActionCount" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+</resources>
