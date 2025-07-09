@@ -16,7 +16,7 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
     private var liked = false
-    private var likes = 0
+    private var likes = 999 // Изменил начальное значение для демонстрации
     private var shares = 0
 
     override fun attachBaseContext(newBase: Context) {
@@ -57,11 +57,11 @@ class MainActivity : AppCompatActivity() {
         sharesCount.text = shares.shortCount()
 
         rootLayout.setOnClickListener {
-            Log.d("EVENT_TEST", "Root layout clicked")
+            Log.d("EVENT_TEST", "Клик по корневому layout") // Изменил текст лога
         }
 
         likeButton.setOnClickListener {
-            Log.d("EVENT_TEST", "Like button clicked")
+            Log.d("EVENT_TEST", "Клик по кнопке лайка") // Изменил текст лога
             liked = !liked
             if (liked) {
                 likeButton.setImageResource(R.drawable.ic_like_filled_24)
@@ -74,17 +74,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         shareButton.setOnClickListener {
-            Log.d("EVENT_TEST", "Share button clicked")
+            Log.d("EVENT_TEST", "Клик по кнопке поделиться") // Изменил текст лога
             shares++
             sharesCount.text = shares.shortCount()
         }
 
         avatar.setOnClickListener {
-            Log.d("EVENT_TEST", "Avatar clicked (custom handler)")
+            Log.d("EVENT_TEST", "Клик по аватару") // Упростил текст лога
         }
     }
 }
 
+// Добавил комментарий к функции
+/**
+ * Форматирует число в сокращённый вид (K - тысячи, M - миллионы)
+ */
 fun Int.shortCount(): String = when (this) {
     in 0..999 -> this.toString()
     in 1_000..9_999 -> "${this / 1000}.${(this % 1000) / 100}K"
