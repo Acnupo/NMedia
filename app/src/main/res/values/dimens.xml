@@ -2,7 +2,7 @@
 <resources>
     <dimen name="common_spacing">16dp</dimen>
     <dimen name="posts_avatar_size">48dp</dimen>
-
+    <dimen name="screen_edge_padding">16dp</dimen>
     <dimen name="actions_padding">8dp</dimen>
     <dimen name="action_icon_size">24dp</dimen>
     <dimen name="action_icon_margin">4dp</dimen>

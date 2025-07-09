@@ -1,10 +1,16 @@
 package ru.netology.nmedia
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import android.content.Context
+import android.content.res.Configuration
+import java.util.Locale
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -12,6 +18,15 @@ class MainActivity : AppCompatActivity() {
     private var liked = false
     private var likes = 0
     private var shares = 0
+
+    override fun attachBaseContext(newBase: Context) {
+        val locale = Locale("ru")
+        Locale.setDefault(locale)
+        val config = Configuration(newBase.resources.configuration)
+        config.setLocale(locale)
+        val context = newBase.createConfigurationContext(config)
+        super.attachBaseContext(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,15 +38,30 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val rootLayout: ConstraintLayout = findViewById(R.id.main)
+        val avatar: ImageView = findViewById(R.id.avatar)
+        val author: TextView = findViewById(R.id.author)
+        val published: TextView = findViewById(R.id.published)
+        val content: TextView = findViewById(R.id.content)
         val likeButton: ImageButton = findViewById(R.id.like_button)
         val shareButton: ImageButton = findViewById(R.id.share_button)
         val likesCount: TextView = findViewById(R.id.likes_count)
         val sharesCount: TextView = findViewById(R.id.shares_count)
 
+        avatar.setImageResource(R.drawable.ic_netology_48dp)
+        author.text = getString(R.string.post_author)
+        published.text = getString(R.string.post_published)
+        content.text = getString(R.string.post_content)
+
         likesCount.text = likes.shortCount()
         sharesCount.text = shares.shortCount()
 
+        rootLayout.setOnClickListener {
+            Log.d("EVENT_TEST", "Root layout clicked")
+        }
+
         likeButton.setOnClickListener {
+            Log.d("EVENT_TEST", "Like button clicked")
             liked = !liked
             if (liked) {
                 likeButton.setImageResource(R.drawable.ic_like_filled_24)
@@ -44,8 +74,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         shareButton.setOnClickListener {
+            Log.d("EVENT_TEST", "Share button clicked")
             shares++
             sharesCount.text = shares.shortCount()
+        }
+
+        avatar.setOnClickListener {
+            Log.d("EVENT_TEST", "Avatar clicked (custom handler)")
         }
     }
 }
